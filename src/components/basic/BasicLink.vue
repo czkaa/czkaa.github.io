@@ -1,12 +1,18 @@
 <template>
-  <a target="_blank" :href="link" basic-link class="block">{{link}}</a>
+  <div basic-link>
+  {{text}} <a target="_blank" :href="link" class="underline"> {{link}}</a>
+</div>
 </template>
 
 <script>
 
 export default {
   props: {
-    link: String
+    link: String,
+    text: {
+      type: String,
+      default: ''
+    }
   },
 }
 </script>

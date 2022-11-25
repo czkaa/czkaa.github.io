@@ -22,6 +22,13 @@
 </script>
 
 <style lang="scss">
+  input[type=range] {
+    cursor: pointer;
+  }
+
+  input[type=range][disabled] {
+    pointer-events: none;
+  }
 
   html {
     font-size: 16px;

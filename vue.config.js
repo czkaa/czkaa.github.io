@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/',
+  publicPath: process.env.NODE_ENV === "production" ? "/czkaa.github.io/" : "/",
   devServer: {
         proxy: 'http://localhost:8080/#/',
     },

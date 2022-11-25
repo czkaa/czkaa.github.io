@@ -9,3 +9,8 @@
 @tailwind components;
 
 @tailwind utilities;
+
+body {
+  @apply text-sm;
+  @apply font-diatype;
+}

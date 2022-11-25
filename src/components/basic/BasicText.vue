@@ -1,5 +1,5 @@
 <template>
-  <div basic-text v-html="text" class="text-justify text-xs"/>
+  <div basic-text v-html="text" class="text-justify"/>
 </template>
 
 <script>

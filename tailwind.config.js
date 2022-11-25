@@ -17,11 +17,11 @@ module.exports = {
         letterSpacing: '-0.02em',
         lineHeight: '2.2rem',
       }],
-      sm: ['1.5rem', {
-        letterSpacing: '0.01em',
-        lineHeight: '1.5rem',
+      sm: ['1.15rem', {
+        letterSpacing: '-0.005em',
+        lineHeight: '1.25rem',
       }],
-      xs: ['0.75rem', {
+      xs: ['0.65rem', {
         letterSpacing: '0.01em',
         lineHeight: '0.8rem',
       }]
@@ -46,9 +46,6 @@ module.exports = {
       maxWidth: {
         'start' : '12rem',
         'end' : '100vw'
-      },
-      dropShadow: {
-        'shape': '0rem .2rem .1rem rgba(0,0,0,.5)',
       },
      fontFamily: {
        'nature' : 'Nature',
@@ -84,6 +81,9 @@ module.exports = {
       },
       transitionDuration: {
         'stempel': '2000ms',
+      },
+      dropShadow: {
+        'custom': '0 0 5px rgba(0, 50, 100, 0.3)',
       },
       keyframes: {
         blink :{
