@@ -200,7 +200,7 @@ onMounted(() => fetchAllData());
       <div class="">
         <!-- About View -->
         <div v-if="currentChannel === 'about'">
-          Karen Czock<br />
+          Karen Czock <br />
           developer, designer<br />
           <a href="mailto:karen.czock@posteo.de" class="underline"
             >karen.czock@postoe.de</a
