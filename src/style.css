@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: rgb(177, 177, 177);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input[type="range"] {
+  all: revert;
+  width: 100%;
+  pointer-events: auto;
+}
