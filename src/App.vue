@@ -70,8 +70,13 @@ const subchannelContents = computed(() => {
 const textBlocks = computed(() =>
   subchannelContents.value.filter((item) => item.class === 'Text')
 );
+
 const images = computed(() =>
   subchannelContents.value.filter((item) => item.class === 'Image')
+);
+
+const linkBlocks = computed(() =>
+  subchannelContents.value.filter((item) => item.class === 'Link')
 );
 
 const fetchAllData = async () => {
@@ -87,6 +92,8 @@ const fetchAllData = async () => {
     });
 
     const subchannelRequests = [];
+
+    // Collect all subchannels across all channels
     channelResponses.forEach((response) => {
       response.data.contents.forEach((item) => {
         if (item.base_class === 'Channel') {
@@ -97,7 +104,20 @@ const fetchAllData = async () => {
       });
     });
 
+    // 👉 Additionally collect ALL subchannels from "projects" channel and fetch them
+    const projectSubchannels =
+      channelData.value['projects-wi_m0hdcafk']?.contents?.filter(
+        (item) => item.base_class === 'Channel'
+      ) || [];
+
+    projectSubchannels.forEach((item) => {
+      subchannelRequests.push(
+        axios.get(`https://api.are.na/v2/channels/${item.id}`)
+      );
+    });
+
     const subchannelResponses = await Promise.all(subchannelRequests);
+
     subchannelResponses.forEach((res) => {
       subchannelData.value[res.data.id] = res.data;
     });
@@ -217,7 +237,6 @@ onMounted(() => fetchAllData());
         <template v-else-if="currentChannel === 'projects-wi_m0hdcafk'">
           <template v-if="debouncedContentIndex === 0">
             <!-- Thumbnails -->
-
             <div class="grid grid-cols-3 gap-2 mb-6">
               <ImageThumbBlock
                 v-for="(img, i) in images"
@@ -229,13 +248,21 @@ onMounted(() => fetchAllData());
           </template>
 
           <template v-else-if="debouncedContentIndex === 1">
-            <!-- Text Blocks -->
+            <!-- Text Blocks + Link Blocks -->
             <div>
               <TextBlock
                 v-for="block in textBlocks"
                 :key="block.id"
                 :content="block"
               />
+
+              <div v-if="linkBlocks.length > 0" class="mt-4 space-y-2">
+                <LinkBlock
+                  v-for="block in linkBlocks"
+                  :key="block.id"
+                  :content="block"
+                />
+              </div>
             </div>
           </template>
 
