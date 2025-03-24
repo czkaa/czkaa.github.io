@@ -111,7 +111,7 @@ onMounted(() => fetchAllData());
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-frame-h flex flex-col">
     <!-- Sliders Overlay -->
     <div class="fixed h-frame-h w-frame-w shadow-lg z-10 pointer-events-none">
       <!-- Channel Selector (Always visible) -->
@@ -145,11 +145,14 @@ onMounted(() => fetchAllData());
             class="w-full"
             :disabled="subchannels.length <= 1 || currentChannel === 'about'"
             :class="{
-              'opacity-50 cursor-not-allowed':
+              'opacity-20 cursor-not-allowed':
                 subchannels.length <= 1 || currentChannel === 'about',
             }"
           />
-          <div class="flex justify-between -mt-2 text-xs pl-2">
+          <div
+            class="flex justify-between -mt-2 text-xs pl-2"
+            v-show="subchannels.length > 1 || currentChannel !== 'about'"
+          >
             <span
               v-for="(_, index) in subchannels.length || 1"
               :key="index"
@@ -176,12 +179,15 @@ onMounted(() => fetchAllData());
               (images.length === 0 && textBlocks.length === 0)
             "
             :class="{
-              'opacity-50 cursor-not-allowed':
+              'opacity-20 cursor-not-allowed':
                 currentChannel !== 'projects-wi_m0hdcafk' ||
                 (images.length === 0 && textBlocks.length === 0),
             }"
           />
-          <div class="flex justify-between -mt-2 text-xs pl-2 h-4">
+          <div
+            class="flex justify-between -mt-2 text-xs pl-2 h-4"
+            v-show="currentChannel === 'projects-wi_m0hdcafk'"
+          >
             <span
               v-for="(_, index) in images.length + 2"
               :key="index"
@@ -237,7 +243,7 @@ onMounted(() => fetchAllData());
             <!-- Individual Image -->
             <div
               v-if="images[debouncedContentIndex - 2]"
-              class="border border-blue-800 w-full h-[calc(100dvh-6rem)]"
+              class="border w-full h-[calc(100dvh-6rem)]"
             >
               <ImageBlock
                 :content="images[debouncedContentIndex - 2]"
@@ -249,7 +255,7 @@ onMounted(() => fetchAllData());
 
         <!-- Code View (links based on subchannel slider) -->
         <div v-else-if="currentChannel === 'code-exrxeixgkpa'">
-          <div v-if="subchannels.length > 0">
+          <div v-if="subchannels.length > 0" class="-mt-2">
             <LinkBlock
               :content="subchannels[debouncedSubchannelIndex]?.content"
             />
