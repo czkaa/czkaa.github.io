@@ -243,7 +243,7 @@ onMounted(() => fetchAllData());
             <!-- Individual Image -->
             <div
               v-if="images[debouncedContentIndex - 2]"
-              class="border w-full h-[calc(100dvh-6rem)]"
+              class="w-full h-[calc(100dvh-6rem)]"
             >
               <ImageBlock
                 :content="images[debouncedContentIndex - 2]"
