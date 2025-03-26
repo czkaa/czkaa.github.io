@@ -237,7 +237,12 @@ onMounted(() => fetchAllData());
         <template v-else-if="currentChannel === 'projects-wi_m0hdcafk'">
           <template v-if="debouncedContentIndex === 0">
             <!-- Thumbnails -->
-            <div class="grid grid-cols-3 gap-2 mb-6">
+            <div
+              :class="[
+                'grid  gap-2 mb-6',
+                images.length > 2 ? 'grid-cols-3' : 'grid-cols-2',
+              ]"
+            >
               <ImageThumbBlock
                 v-for="(img, i) in images"
                 :key="img.id"
