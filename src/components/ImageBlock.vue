@@ -6,7 +6,7 @@ defineProps({
 
 <template>
   <img
-    :src="content.image.display.url"
+    :src="content.image.large.url"
     :alt="content.title"
     class="object-contain object-left-top"
   />
