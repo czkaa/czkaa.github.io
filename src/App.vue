@@ -3,7 +3,6 @@ import { ref, onMounted, computed, watch } from 'vue';
 import axios from 'axios';
 import TextBlock from './components/TextBlock.vue';
 import ImageBlock from './components/ImageBlock.vue';
-import LinkBlock from './components/LinkBlock.vue';
 import ImageThumbBlock from './components/ImageThumbBlock.vue';
 
 const channels = [
@@ -14,7 +13,7 @@ const channels = [
 
 const currentChannelIndex = ref(1);
 const currentSubchannelIndex = ref(0);
-const currentContentIndex = ref(0);
+const currentContentIndex = ref('0');
 
 const channelData = ref({});
 const subchannelData = ref({});
@@ -141,10 +140,14 @@ onMounted(() => fetchInitialData());
             :max="Math.max(subchannels.length - 1, 0)"
             step="1"
             class="w-full"
-            :disabled="subchannels.length <= 1 || currentChannel === 'about'"
+            :disabled="
+              subchannels.length <= 1 ||
+              currentChannel !== 'projects-wi_m0hdcafk'
+            "
             :class="{
               'opacity-20 cursor-not-allowed':
-                subchannels.length <= 1 || currentChannel === 'about',
+                subchannels.length <= 1 ||
+                currentChannel !== 'projects-wi_m0hdcafk',
             }"
           />
           <div class="flex justify-between -mt-2 text-xs pl-2">
@@ -203,7 +206,9 @@ onMounted(() => fetchInitialData());
 
         <!-- Projects View -->
         <template v-else-if="currentChannel === 'projects-wi_m0hdcafk'">
-          <template v-if="currentContentIndex === 0">
+          <template
+            v-if="currentContentIndex === 0 || currentContentIndex === '0'"
+          >
             <div
               :class="[
                 'grid gap-2 mb-6',
@@ -226,12 +231,19 @@ onMounted(() => fetchInitialData());
                 :key="block.id"
                 :content="block"
               />
-              <div v-if="linkBlocks.length > 0" class="mt-4 space-y-2">
-                <LinkBlock
-                  v-for="block in linkBlocks"
-                  :key="block.id"
-                  :content="block"
-                />
+              <!-- Simple list of links for projects -->
+              <div v-if="linkBlocks.length > 0" class="mt-4">
+                <ul class="space-y-2">
+                  <li v-for="block in linkBlocks" :key="block.id">
+                    <a
+                      :href="block.source?.url || '#'"
+                      target="_blank"
+                      class="underline"
+                    >
+                      {{ block.source.url }}
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </template>
@@ -251,10 +263,19 @@ onMounted(() => fetchInitialData());
 
         <!-- Code View -->
         <div v-else-if="currentChannel === 'code-exrxeixgkpa'">
-          <div v-if="subchannels.length > 0" class="-mt-2">
-            <LinkBlock
-              :content="subchannels[currentSubchannelIndex]?.content"
-            />
+          <!-- Simple list of links for code -->
+          <div v-if="subchannels.length > 0" class="">
+            <ul class="space-y-2">
+              <li v-for="(link, index) in subchannels" :key="link.id">
+                <a
+                  :href="link.source?.url || '#'"
+                  target="_blank"
+                  class="underline"
+                >
+                  {{ link.source.url || 'Link ' + (index + 1) }}
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
